@@ -1,8 +1,8 @@
-from environment import Simulation
+from environment import Simulation, settings
 import pgzrun
 
-WIDTH = 500
-HEIGHT = 500
+WIDTH = settings.WIDTH
+HEIGHT = settings.HEIGHT
 
 simulation = Simulation()
 

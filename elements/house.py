@@ -11,3 +11,6 @@ class House(Element):
 
     def draw(self, screen):
         pass
+
+    def update(self):
+        pass
