@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Virus Simulation</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css">
     <script type="module">
         import * as simulation from './__target__/simulation.js';
 
@@ -10,7 +11,7 @@
     </script>
 </head>
 <body>
-<canvas width="500" height="500" id="simulation_canvas"></canvas>
+<canvas id="simulation_canvas"></canvas>
 <script>
     function animate() {
         simulation.simulation.py_update();

@@ -1,8 +1,6 @@
 from human_status import HumanStatus
 
 BG_COLOR = "#fff"
-WIDTH = 800
-HEIGHT = 800
 
 HUMAN_SIZE_RADIUS = 5
 HUMAN_CHANGE_VELOCITY_PROBABILITY = 0.05

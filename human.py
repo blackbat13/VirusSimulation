@@ -10,14 +10,15 @@ class Human(Element):
     Class for representing a human in the simulation.
     """
 
-    def __init__(self, position: (int, int), status, stationary):
+    def __init__(self, position: (int, int), width, height, status, stationary):
         super().__init__(position)
         self._velocity = (0, 0)
         self._radius = settings.HUMAN_SIZE_RADIUS
         self._status = status
         self._stationary = stationary
         self._color = settings.HUMAN_STATUS_COLOR[self._status]
-        console.log(self._status, self._color)
+        self._canvas_width = width
+        self._canvas_height = height
 
     @property
     def status(self) -> HumanStatus:
@@ -57,12 +58,12 @@ class Human(Element):
         if self._position[0] < self._radius:
             self._position = (self._radius, self._position[1])
             self._velocity = (-self._velocity[0], self._velocity[1])
-        if self._position[0] > settings.WIDTH - self._radius:
-            self._position = (settings.WIDTH - self._radius, self._position[1])
+        if self._position[0] > self._canvas_width - self._radius:
+            self._position = (self._canvas_width - self._radius, self._position[1])
             self._velocity = (-self._velocity[0], self._velocity[1])
         if self._position[1] < self._radius:
             self._position = (self._position[0], self._radius)
             self._velocity = (self._velocity[0], -self._velocity[1])
-        if self._position[1] > settings.HEIGHT - self._radius:
-            self._position = (self._position[0], settings.HEIGHT - self._radius)
+        if self._position[1] > self._canvas_height - self._radius:
+            self._position = (self._position[0], self._canvas_height - self._radius)
             self._velocity = (self._velocity[0], -self._velocity[1])
