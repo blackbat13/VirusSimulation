@@ -1,21 +1,32 @@
 from human_status import HumanStatus
 
-BG_COLOR = "#fff"
 
-HUMAN_SIZE_RADIUS = 5
-HUMAN_CHANGE_VELOCITY_PROBABILITY = 0.05
-HUMAN_MAX_VELOCITY = 2
+class Settings:
+    def __init__(self):
+        self.BG_COLOR = "#F1F7EE"
 
-HUMAN_STATUS_COLOR = {HumanStatus.SICK: "#f00",
-                      HumanStatus.HEALTHY: "#0f0",
-                      HumanStatus.CONTAGIOUS: "#fa886b",
-                      HumanStatus.RECOVERED: "#e5f7b2"}
+        self.HUMAN_SIZE_RADIUS = 5
+        self.HUMAN_CHANGE_VELOCITY_PROBABILITY = 0.05
+        self.HUMAN_MAX_VELOCITY = 2
 
-HUMAN_COUNT = 200
-HUMAN_STATIONARY_PROBABILITY = 0.60
-HUMAN_SICK_PROBABILITY = 0.20
+        self.HUMAN_STATUS_COLOR = {HumanStatus.SICK: "#ff000d",
+                                   HumanStatus.HEALTHY: "#39ff14",
+                                   HumanStatus.CONTAGIOUS: "#ff0490",
+                                   HumanStatus.RECOVERED: "#ccff00"}
 
-CONTAGIOUS_TIME = 60
-SICK_TIME = 60
+        self.HUMAN_COUNT = 200
+        self.HUMAN_STATIONARY_PROBABILITY = 0.60
+        self.HUMAN_SICK_PROBABILITY = 0.20
 
-INFECTION_DISTANCE = 2 * HUMAN_SIZE_RADIUS + 5
+        self.CONTAGIOUS_TIME = 60
+        self.SICK_TIME = 60
+
+        self.INFECTION_DISTANCE = 2 * self.HUMAN_SIZE_RADIUS + 5
+
+        self.WIDTH = 0
+        self.HEIGHT = 0
+
+    def read_settings(self):
+        self.HUMAN_COUNT = document.getElementById('human_count_input').value
+        self.HUMAN_SICK_PROBABILITY = document.getElementById("human_sick_probability_input").value
+        self.HUMAN_STATIONARY_PROBABILITY = document.getElementById("human_stationary_probability_input").value
