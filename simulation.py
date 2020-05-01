@@ -47,14 +47,14 @@ class Simulation:
         for h in self._human_list:
             h.update()
 
-        sick = list(filter(lambda h: h.status == HumanStatus.SICK, self._human_list))
+        sick = list(filter(lambda h: h.status == HumanStatus.SICK or h.status == HumanStatus.CONTAGIOUS, self._human_list))
         healthy = list(filter(lambda h: h.status == HumanStatus.HEALTHY, self._human_list))
 
         for s in sick:
             for h in healthy:
                 # print(s.distance(h))
                 if s.distance(h) <= settings.INFECTION_DISTANCE:
-                    h.change_status(HumanStatus.SICK)
+                    h.change_status(HumanStatus.CONTAGIOUS)
 
         # for i in range(len(self._human_list)):
         #     if self._human_list[i].status != HumanStatus.SICK:

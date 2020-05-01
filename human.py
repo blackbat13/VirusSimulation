@@ -3,6 +3,7 @@ from human_status import HumanStatus
 import settings
 import random
 import math
+import time
 
 
 class Human(Element):
@@ -19,6 +20,7 @@ class Human(Element):
         self._color = settings.HUMAN_STATUS_COLOR[self._status]
         self._canvas_width = width
         self._canvas_height = height
+        self._timer = time.time()
 
     @property
     def status(self) -> HumanStatus:
@@ -32,14 +34,26 @@ class Human(Element):
         context.fill()
 
     def update(self):
-        if self._stationary:
-            return
+        self._update_status()
 
+        if not self._stationary:
+            self._update_position()
+
+    def _update_position(self):
         self._position = (self._position[0] + self._velocity[0], self._position[1] + self._velocity[1])
         self._position_to_bounds()
         if random.random() < settings.HUMAN_CHANGE_VELOCITY_PROBABILITY:
             self._velocity = (random.randint(-settings.HUMAN_MAX_VELOCITY, settings.HUMAN_MAX_VELOCITY),
                               random.randint(-settings.HUMAN_MAX_VELOCITY, settings.HUMAN_MAX_VELOCITY))
+
+    def _update_status(self):
+        if self._status == HumanStatus.CONTAGIOUS and (time.time() - self._timer) > settings.CONTAGIOUS_TIME:
+            self._timer = time.time()
+            self.change_status(HumanStatus.SICK)
+
+        if self._status == HumanStatus.SICK and (time.time() - self._timer) > settings.SICK_TIME:
+            self._timer = time.time()
+            self.change_status(HumanStatus.RECOVERED)
 
     def change_status(self, status: HumanStatus):
         """
