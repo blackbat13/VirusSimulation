@@ -33,3 +33,5 @@ class Settings:
         self.HUMAN_SICK_PROBABILITY = document.getElementById("human_sick_probability_input").value
         self.HUMAN_STATIONARY_PROBABILITY = document.getElementById("human_stationary_probability_input").value
         self.HUMAN_DEATH_PROBABILITY = document.getElementById("human_death_probability_input").value
+        self.CONTAGIOUS_TIME = document.getElementById("contagious_time_input").value
+        self.SICK_TIME = document.getElementById("sick_time_input").value

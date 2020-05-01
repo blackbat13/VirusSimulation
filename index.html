@@ -47,6 +47,16 @@
                     <input type="range" id="human_death_probability_input" min="0.01" max="1" step="0.01" value="0.20">
                 </div>
 
+                <div class="form_control_div">
+                    <label for="contagious_time_input" id="contagious_time_label">Contagious Time (seconds)</label>
+                    <input type="number" id="contagious_time_input" min="1" step="1" value="60">
+                </div>
+
+                <div class="form_control_div">
+                    <label for="contagious_time_input" id="sick_time_label">Sick Time (seconds)</label>
+                    <input type="number" id="sick_time_input" min="1" step="1" value="60">
+                </div>
+
                 <button type="button" id="reset_button" onclick="simulation.reset(); reset_chart();">Reset</button>
             </form>
         </div>
@@ -204,6 +214,10 @@
         setInterval(function () {
             update_chart()
         }, chart_update_interval);
+
+        document.getElementById('settings_form').addEventListener('submit', function (e) {
+            e.preventDefault();
+        }, false);
     };
 </script>
 </body>
