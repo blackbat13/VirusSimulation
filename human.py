@@ -50,7 +50,11 @@ class Human(Element):
 
         if self._status == HumanStatus.SICK and (time.time() - self._timer) > self._settings.SICK_TIME:
             self._timer = time.time()
-            self.change_status(HumanStatus.RECOVERED)
+            if random.random() < self._settings.HUMAN_DEATH_PROBABILITY:
+                self.change_status(HumanStatus.DEAD)
+                self._stationary = True
+            else:
+                self.change_status(HumanStatus.RECOVERED)
 
     def change_status(self, status: HumanStatus):
         """
