@@ -11,7 +11,42 @@
     </script>
 </head>
 <body>
-<canvas id="simulation_canvas"></canvas>
+<div id="container">
+    <div class="row">
+        <div id="simulation_div">
+            <canvas id="simulation_canvas"></canvas>
+        </div>
+        <div id="settings_div">
+            <h1>Simulation Settings</h1>
+            <form id="settings_form">
+
+                <div class="form_control_div">
+                    <label for="human_count_input" id="human_count_label">Human Count:</label>
+                    <input type="range" id="human_count_input" min="10" max="300" step="1" value="200">
+                </div>
+
+                <div class="form_control_div">
+                    <label for="human_sick_probability_input" id="human_sick_probability_label">Human Sick
+                        Probability:</label>
+                    <input type="range" id="human_sick_probability_input" min="0.01" max="1" step="0.01" value="0.20">
+                </div>
+
+                <div class="form_control_div">
+                    <label for="human_stationary_probability_input" id="human_stationary_probability_label">Human
+                        Stationary
+                        Probability:</label>
+                    <input type="range" id="human_stationary_probability_input" min="0.01" max="1" step="0.01"
+                           value="0.60">
+                </div>
+
+                <button type="button" id="reset_button" onclick="simulation.simulation.reset()">Reset</button>
+            </form>
+        </div>
+    </div>
+    <div id="statistics_div">
+        <h1>Statistics</h1>
+    </div>
+</div>
 <script>
     function animate() {
         simulation.simulation.py_update();

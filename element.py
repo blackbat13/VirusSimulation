@@ -1,4 +1,5 @@
 import math
+from settings import Settings
 
 
 class Element:
@@ -6,7 +7,8 @@ class Element:
     Abstract class for representing an element of the simulation.
     """
 
-    def __init__(self, position: (int, int)):
+    def __init__(self, settings: Settings, position: (int, int)):
+        self._settings = settings
         self._position: (int, int) = position
 
     @property
