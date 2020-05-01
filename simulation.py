@@ -1,7 +1,6 @@
-from environment import settings
-from elements import House, Human, HumanStatus
-from pgzero.screen import Screen
-from typing import List
+import settings
+from human import Human
+from human_status import HumanStatus
 import random
 
 
@@ -11,21 +10,27 @@ class Simulation:
     """
 
     def __init__(self):
-        self._human_list: List[Human] = []
+        self._human_list = []
+        self._canvas = document.getElementById('simulation_canvas')
+        self._context = self._canvas.getContext('2d')
 
         for _ in range(settings.HUMAN_COUNT):
             status = HumanStatus.HEALTHY
+
             if random.random() < settings.HUMAN_SICK_PROBABILITY:
                 status = HumanStatus.SICK
-            self._human_list.append(Human((random.randint(0, settings.WIDTH), random.randint(0, settings.HEIGHT)),
-                                          status=status,
-                                          stationary=random.random() < settings.HUMAN_STATIONARY_PROBABILITY))
 
-    def draw(self, screen: Screen):
-        screen.fill(settings.BG_COLOR)
+            # console.log(status, status == HumanStatus.SICK)
+            self._human_list.append(Human((random.randint(0, settings.WIDTH), random.randint(0, settings.HEIGHT)),
+                                          status,
+                                          random.random() < settings.HUMAN_STATIONARY_PROBABILITY))
+
+    def draw(self):
+        self._context.fillStyle = settings.BG_COLOR
+        self._context.fillRect(0, 0, 500, 500)
 
         for h in self._human_list:
-            h.draw(screen)
+            h.draw(self._context)
 
     def update(self):
         # self._human_list[0].change_status(HumanStatus.HEALTHY)
@@ -53,3 +58,5 @@ class Simulation:
         #             continue
         #         if self._human_list[i].distance(self._human_list[j]) < settings.INFECTION_DISTANCE:
         #             self._human_list[j].change_status(HumanStatus.SICK)
+
+simulation = Simulation()

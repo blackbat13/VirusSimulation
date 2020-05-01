@@ -1,9 +1,7 @@
-from abc import ABC, abstractmethod
-import pgzero.screen
 import math
 
 
-class Element(ABC):
+class Element:
     """
     Abstract class for representing an element of the simulation.
     """
@@ -38,16 +36,14 @@ class Element(ABC):
     def distance(self, element):
         return math.sqrt((self.x - element.x) ** 2 + (self.y - element.y) ** 2)
 
-    @abstractmethod
-    def draw(self, screen: pgzero.screen.Screen):
+    def draw(self, context):
         """
         Draws element on the screen.
-        :param screen: screen to draw on
+        :param context: HTML canvas context to draw on
         :return: None
         """
         pass
 
-    @abstractmethod
     def update(self):
         """
         Updates the element position etc.

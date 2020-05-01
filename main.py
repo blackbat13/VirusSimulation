@@ -1,4 +1,5 @@
-from environment import Simulation, settings
+from environment import Simulation
+import settings
 import pgzrun
 
 WIDTH = settings.WIDTH

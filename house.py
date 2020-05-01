@@ -1,4 +1,4 @@
-from elements.element import Element
+from element import Element
 
 
 class House(Element):
@@ -9,7 +9,7 @@ class House(Element):
     def __init__(self, position: (int, int)):
         super().__init__(position)
 
-    def draw(self, screen):
+    def draw(self, context):
         pass
 
     def update(self):

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Virus Simulation</title>
+    <script type="module">
+        import * as simulation from './__target__/simulation.js';
+
+        window.simulation = simulation;
+    </script>
+</head>
+<body>
+<canvas width="500" height="500" id="simulation_canvas"></canvas>
+<script>
+    function animate() {
+        simulation.simulation.py_update();
+        simulation.simulation.draw();
+        requestAnimationFrame(animate);
+    }
+
+    window.onload = function () {
+        requestAnimationFrame(animate);
+    };
+</script>
+</body>
+</html>

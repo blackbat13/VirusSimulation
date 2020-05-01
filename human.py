@@ -1,7 +1,8 @@
-from elements.element import Element
-from elements.human_status import HumanStatus
-from environment import settings
+from element import Element
+from human_status import HumanStatus
+import settings
 import random
+import math
 
 
 class Human(Element):
@@ -9,20 +10,25 @@ class Human(Element):
     Class for representing a human in the simulation.
     """
 
-    def __init__(self, position: (int, int), status: HumanStatus = HumanStatus.HEALTHY, stationary: bool = False):
+    def __init__(self, position: (int, int), status, stationary):
         super().__init__(position)
         self._velocity = (0, 0)
         self._radius = settings.HUMAN_SIZE_RADIUS
         self._status = status
         self._stationary = stationary
         self._color = settings.HUMAN_STATUS_COLOR[self._status]
+        console.log(self._status, self._color)
 
     @property
     def status(self) -> HumanStatus:
         return self._status
 
-    def draw(self, screen):
-        screen.draw.filled_circle(self._position, self._radius, self._color)
+    def draw(self, context):
+        context.fillStyle = self._color
+        context.beginPath()
+        context.arc(self.x, self.y, self._radius, 0, 2 * math.pi)
+        # screen.draw.filled_circle(self._position, self._radius, self._color)
+        context.fill()
 
     def update(self):
         if self._stationary:
