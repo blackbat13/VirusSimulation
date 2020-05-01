@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <title>Virus Simulation</title>
     <link href="css/main.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script type="module">
         import * as simulation from './js/simulation.js';
+        import * as humanStatus from './js/human_status.js';
 
-        window.simulation = simulation;
+        window.simulation = simulation.simulation;
+        window.HumanStatus = humanStatus.HumanStatus;
     </script>
 </head>
 <body>
@@ -19,7 +22,6 @@
         <div id="settings_div">
             <h1>Simulation Settings</h1>
             <form id="settings_form">
-
                 <div class="form_control_div">
                     <label for="human_count_input" id="human_count_label">Human Count:</label>
                     <input type="range" id="human_count_input" min="10" max="300" step="1" value="200">
@@ -39,23 +41,183 @@
                            value="0.60">
                 </div>
 
-                <button type="button" id="reset_button" onclick="simulation.simulation.reset()">Reset</button>
+                <div class="form_control_div">
+                    <label for="human_death_probability_input" id="human_death_probability_label">Human Death
+                        Probability:</label>
+                    <input type="range" id="human_death_probability_input" min="0.01" max="1" step="0.01" value="0.20">
+                </div>
+
+                <div class="form_control_div">
+                    <label for="contagious_time_input" id="contagious_time_label">Contagious Time (seconds)</label>
+                    <input type="number" id="contagious_time_input" min="1" step="1" value="60">
+                </div>
+
+                <div class="form_control_div">
+                    <label for="contagious_time_input" id="sick_time_label">Sick Time (seconds)</label>
+                    <input type="number" id="sick_time_input" min="1" step="1" value="60">
+                </div>
+
+                <button type="button" id="reset_button" onclick="simulation.reset(); reset_chart();">Reset</button>
             </form>
         </div>
     </div>
     <div id="statistics_div">
-        <h1>Statistics</h1>
+        <canvas id="chart_canvas">
+        </canvas>
     </div>
 </div>
 <script>
+    let chart;
+
+    let chart_update_interval = 1000;
+    let x_val = 1;
+    let chart_data_length = 20;
+
+    let chart_config;
+
     function animate() {
-        simulation.simulation.py_update();
-        simulation.simulation.draw();
+        simulation.py_update();
+        simulation.draw();
         requestAnimationFrame(animate);
     }
 
+    function update_chart() {
+        chart_config.data.labels.push(x_val);
+        chart_config.data.datasets[0].data.push(
+            simulation.count(HumanStatus.HEALTHY)
+        );
+        chart_config.data.datasets[1].data.push(
+            simulation.count(HumanStatus.CONTAGIOUS)
+        );
+        chart_config.data.datasets[2].data.push(
+            simulation.count(HumanStatus.SICK)
+        );
+        chart_config.data.datasets[3].data.push(
+            simulation.count(HumanStatus.RECOVERED)
+        );
+        chart_config.data.datasets[4].data.push(
+            simulation.count(HumanStatus.DEAD)
+        );
+        x_val++;
+
+        if (chart_config.data.datasets[0].data.length > chart_data_length) {
+            for (let i = 0; i < chart_config.data.datasets.length; i++) {
+                chart_config.data.datasets[i].data.shift();
+            }
+
+            chart_config.data.labels.shift();
+        }
+
+        chart.update();
+    }
+
+    function reset_chart() {
+        for (let i = 0; i < chart_config.data.datasets.length; i++) {
+            chart_config.data.datasets[i].data = [];
+        }
+
+        chart_config.data.labels = [];
+        chart.update();
+        x_val = 0;
+    }
+
+    function configure_chart() {
+        chart_config = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Healthy',
+                        fill: false,
+                        backgroundColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.HEALTHY],
+                        borderColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.HEALTHY],
+                        data: [],
+                        // pointRadius: 0,
+                    },
+                    {
+                        label: 'Contagious',
+                        fill: false,
+                        backgroundColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.CONTAGIOUS],
+                        borderColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.CONTAGIOUS],
+                        data: []
+                    },
+                    {
+                        label: 'Sick',
+                        fill: false,
+                        backgroundColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.SICK],
+                        borderColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.SICK],
+                        data: []
+                    },
+                    {
+                        label: 'Recovered',
+                        fill: false,
+                        backgroundColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.RECOVERED],
+                        borderColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.RECOVERED],
+                        data: []
+                    },
+                    {
+                        label: 'Dead',
+                        fill: false,
+                        backgroundColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.DEAD],
+                        borderColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.DEAD],
+                        data: []
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Virus Simulation'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Time (seconds)'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
+                        }
+                    }]
+                }
+            }
+        };
+    }
+
     window.onload = function () {
+        configure_chart();
+        let chart_canvas = document.getElementById("chart_canvas");
+        chart_canvas.width = chart_canvas.clientWidth;
+        chart_canvas.height = chart_canvas.clientHeight;
+
+        let chart_context = chart_canvas.getContext("2d");
+
+        chart = new Chart(chart_context, chart_config);
+
         requestAnimationFrame(animate);
+
+        setInterval(function () {
+            update_chart()
+        }, chart_update_interval);
+
+        document.getElementById('settings_form').addEventListener('submit', function (e) {
+            e.preventDefault();
+        }, false);
     };
 </script>
 </body>

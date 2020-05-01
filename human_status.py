@@ -3,3 +3,4 @@ class HumanStatus:
     CONTAGIOUS = 1
     SICK = 2
     RECOVERED = 3
+    DEAD = 4

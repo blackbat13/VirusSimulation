@@ -8,4 +8,4 @@ Simulation is displayed on a HTML canvas element, and Transcrypt library is used
 
 ## Current state
 
-![](example.gif)
+[https://blackbat13.github.io/VirusSimulation/](https://blackbat13.github.io/VirusSimulation/)

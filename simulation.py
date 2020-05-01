@@ -23,6 +23,10 @@ class Simulation:
 
         self.reset()
 
+    @property
+    def settings(self):
+        return self._settings
+
     def draw(self):
         self._context.fillStyle = self._settings.BG_COLOR
         self._context.fillRect(0, 0, self._settings.WIDTH, self._settings.HEIGHT)
@@ -58,6 +62,9 @@ class Simulation:
                                            random.randint(0, self._settings.HEIGHT)),
                                           status,
                                           random.random() < self._settings.HUMAN_STATIONARY_PROBABILITY))
+
+    def count(self, status: HumanStatus):
+        return sum(1 for h in self._human_list if h.status == status)
 
 
 simulation = Simulation()
