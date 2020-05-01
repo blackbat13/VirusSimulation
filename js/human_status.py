@@ -1,3 +1,5 @@
 class HumanStatus:
     HEALTHY = 0
-    SICK = 1
+    CONTAGIOUS = 1
+    SICK = 2
+    RECOVERED = 3
