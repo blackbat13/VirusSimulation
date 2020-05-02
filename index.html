@@ -57,6 +57,11 @@
                     <input type="number" id="sick_time_input" min="1" step="1" value="60">
                 </div>
 
+                <div class="form_control_div">
+                    <label for="max_time_variation_input" id="max_time_variation_label">Max Time Variation (seconds)</label>
+                    <input type="number" id="max_time_variation_input" min="0" step="1" value="5">
+                </div>
+
                 <button type="button" id="reset_button" onclick="simulation.reset(); reset_chart();">Reset</button>
             </form>
         </div>
