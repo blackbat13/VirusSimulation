@@ -1,4 +1,4 @@
-from element import Element
+from elements.element import Element
 
 
 class House(Element):

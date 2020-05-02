@@ -1,4 +1,4 @@
-from human_status import HumanStatus
+from elements.human_status import HumanStatus
 
 
 class Settings:

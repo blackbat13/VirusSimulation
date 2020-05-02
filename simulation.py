@@ -1,6 +1,6 @@
 from settings import Settings
-from human import Human
-from human_status import HumanStatus
+from elements.human import Human
+from elements.human_status import HumanStatus
 import random
 
 
