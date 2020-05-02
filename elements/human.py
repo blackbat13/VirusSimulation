@@ -1,5 +1,5 @@
-from element import Element
-from human_status import HumanStatus
+from elements.element import Element
+from elements.human_status import HumanStatus
 from settings import Settings
 import random
 import math

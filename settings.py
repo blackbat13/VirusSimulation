@@ -1,4 +1,4 @@
-from human_status import HumanStatus
+from elements.human_status import HumanStatus
 
 
 class Settings:
@@ -25,9 +25,20 @@ class Settings:
         self.MAX_TIME_VARIATION = 5
 
         self.INFECTION_DISTANCE = 2 * self.HUMAN_SIZE_RADIUS + 5
+        self.INFECTION_PROBABILITY = 0.8
+
+        self.ROAD_COLOR = "#555555"
+        self.ROAD_WIDTH = self.HUMAN_SIZE_RADIUS * 6
+        self.ROAD_COUNT = 3
 
         self.WIDTH = 0
         self.HEIGHT = 0
+
+    def set_width(self, width):
+        self.WIDTH = width
+
+    def set_height(self, height):
+        self.HEIGHT = height
 
     def read_settings(self):
         self.HUMAN_COUNT = document.getElementById('human_count_input').value
@@ -37,3 +48,5 @@ class Settings:
         self.CONTAGIOUS_TIME = int(document.getElementById("contagious_time_input").value)
         self.SICK_TIME = int(document.getElementById("sick_time_input").value)
         self.MAX_TIME_VARIATION = int(document.getElementById("max_time_variation_input").value)
+        self.INFECTION_PROBABILITY = document.getElementById("infection_probability_input").value
+        console.log(self.INFECTION_PROBABILITY)

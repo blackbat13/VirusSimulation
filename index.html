@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script type="module">
         import * as simulation from './js/simulation.js';
-        import * as humanStatus from './js/human_status.js';
+        import * as humanStatus from './js/elements.human_status.js';
 
         window.simulation = simulation.simulation;
         window.HumanStatus = humanStatus.HumanStatus;
@@ -45,6 +45,12 @@
                     <label for="human_death_probability_input" id="human_death_probability_label">Human Death
                         Probability:</label>
                     <input type="range" id="human_death_probability_input" min="0.01" max="1" step="0.01" value="0.20">
+                </div>
+
+                <div class="form_control_div">
+                    <label for="infection_probability_input" id="infection_probability_label">Infection
+                        Probability:</label>
+                    <input type="range" id="infection_probability_input" min="0.01" max="1" step="0.01" value="0.80">
                 </div>
 
                 <div class="form_control_div">
