@@ -12,7 +12,7 @@ class Settings:
         self.HUMAN_STATUS_COLOR = {HumanStatus.SICK: "#ff000d",
                                    HumanStatus.HEALTHY: "#39ff14",
                                    HumanStatus.CONTAGIOUS: "#ff0490",
-                                   HumanStatus.RECOVERED: "#ccff00",
+                                   HumanStatus.RECOVERED: "#0ff0fc",
                                    HumanStatus.DEAD: "#000000"}
 
         self.HUMAN_COUNT = 200
@@ -49,4 +49,3 @@ class Settings:
         self.SICK_TIME = int(document.getElementById("sick_time_input").value)
         self.MAX_TIME_VARIATION = int(document.getElementById("max_time_variation_input").value)
         self.INFECTION_PROBABILITY = document.getElementById("infection_probability_input").value
-        console.log(self.INFECTION_PROBABILITY)
