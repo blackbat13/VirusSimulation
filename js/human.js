@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2020-05-02 01:35:25
+// Transcrypt'ed from Python, 2020-05-02 11:09:57
 var math = {};
 var random = {};
 var time = {};
@@ -23,6 +23,7 @@ export var Human =  __class__ ('Human', [Element], {
 		self._stationary = stationary;
 		self._color = settings.HUMAN_STATUS_COLOR [self._status];
 		self._timer = time.time ();
+		self._time_variation = random.randint (-(settings.MAX_TIME_VARIATION), settings.MAX_TIME_VARIATION);
 	});},
 	get _get_status () {return __get__ (this, function (self) {
 		return self._status;
@@ -47,11 +48,11 @@ export var Human =  __class__ ('Human', [Element], {
 		}
 	});},
 	get _update_status () {return __get__ (this, function (self) {
-		if (self._status == HumanStatus.CONTAGIOUS && time.time () - self._timer > self._settings.CONTAGIOUS_TIME) {
+		if (self._status == HumanStatus.CONTAGIOUS && time.time () - self._timer > self._settings.CONTAGIOUS_TIME + self._time_variation) {
 			self._timer = time.time ();
 			self.change_status (HumanStatus.SICK);
 		}
-		if (self._status == HumanStatus.SICK && time.time () - self._timer > self._settings.SICK_TIME) {
+		if (self._status == HumanStatus.SICK && time.time () - self._timer > self._settings.SICK_TIME + self._time_variation) {
 			self._timer = time.time ();
 			if (random.random () < self._settings.HUMAN_DEATH_PROBABILITY) {
 				self.change_status (HumanStatus.DEAD);

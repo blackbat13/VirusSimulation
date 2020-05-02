@@ -19,6 +19,7 @@ class Human(Element):
         self._stationary = stationary
         self._color = settings.HUMAN_STATUS_COLOR[self._status]
         self._timer = time.time()
+        self._time_variation = random.randint(-settings.MAX_TIME_VARIATION, settings.MAX_TIME_VARIATION)
 
     @property
     def status(self) -> HumanStatus:
@@ -44,11 +45,13 @@ class Human(Element):
                               random.randint(-self._settings.HUMAN_MAX_VELOCITY, self._settings.HUMAN_MAX_VELOCITY))
 
     def _update_status(self):
-        if self._status == HumanStatus.CONTAGIOUS and (time.time() - self._timer) > self._settings.CONTAGIOUS_TIME:
+        if self._status == HumanStatus.CONTAGIOUS and (time.time() - self._timer) > (
+                self._settings.CONTAGIOUS_TIME + self._time_variation):
             self._timer = time.time()
             self.change_status(HumanStatus.SICK)
 
-        if self._status == HumanStatus.SICK and (time.time() - self._timer) > self._settings.SICK_TIME:
+        if self._status == HumanStatus.SICK and (time.time() - self._timer) > (
+                self._settings.SICK_TIME + self._time_variation):
             self._timer = time.time()
             if random.random() < self._settings.HUMAN_DEATH_PROBABILITY:
                 self.change_status(HumanStatus.DEAD)

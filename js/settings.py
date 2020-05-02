@@ -22,6 +22,7 @@ class Settings:
 
         self.CONTAGIOUS_TIME = 60
         self.SICK_TIME = 60
+        self.MAX_TIME_VARIATION = 5
 
         self.INFECTION_DISTANCE = 2 * self.HUMAN_SIZE_RADIUS + 5
 
@@ -33,5 +34,6 @@ class Settings:
         self.HUMAN_SICK_PROBABILITY = document.getElementById("human_sick_probability_input").value
         self.HUMAN_STATIONARY_PROBABILITY = document.getElementById("human_stationary_probability_input").value
         self.HUMAN_DEATH_PROBABILITY = document.getElementById("human_death_probability_input").value
-        self.CONTAGIOUS_TIME = document.getElementById("contagious_time_input").value
-        self.SICK_TIME = document.getElementById("sick_time_input").value
+        self.CONTAGIOUS_TIME = int(document.getElementById("contagious_time_input").value)
+        self.SICK_TIME = int(document.getElementById("sick_time_input").value)
+        self.MAX_TIME_VARIATION = int(document.getElementById("max_time_variation_input").value)
