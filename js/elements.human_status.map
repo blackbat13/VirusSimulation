@@ -1,8 +1,8 @@
 {
 	"version": 3,
-	"file": "human_status.js",
+	"file": "elements.human_status.js",
 	"sources": [
-		"human_status.py"
+		"elements.human_status.py"
 	],
 	"mappings": "AAAA;AAKA;AALA;AAAA;AAAA;AACA;AACA;AACA;AACA;AACA;AAAA;AAAA"
 }

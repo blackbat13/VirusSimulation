@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2020-05-02 11:09:57
+// Transcrypt'ed from Python, 2020-05-02 12:19:02
 var math = {};
 var random = {};
 var time = {};
@@ -10,9 +10,9 @@ __nest__ (math, '', __module_math__);
 import * as __module_random__ from './random.js';
 __nest__ (random, '', __module_random__);
 import {Settings} from './settings.js';
-import {HumanStatus} from './human_status.js';
-import {Element} from './element.js';
-var __name__ = 'human';
+import {HumanStatus} from './elements.human_status.js';
+import {Element} from './elements.element.js';
+var __name__ = 'elements.human';
 export var Human =  __class__ ('Human', [Element], {
 	__module__: __name__,
 	get __init__ () {return __get__ (this, function (self, settings, position, status, stationary) {
@@ -88,4 +88,4 @@ export var Human =  __class__ ('Human', [Element], {
 });
 Object.defineProperty (Human, 'status', property.call (Human, Human._get_status));;
 
-//# sourceMappingURL=human.map
+//# sourceMappingURL=elements.human.map
