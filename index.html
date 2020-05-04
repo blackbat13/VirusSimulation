@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Virus Simulation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="css/main.css" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script type="module">
@@ -20,61 +22,108 @@
             <canvas id="simulation_canvas"></canvas>
         </div>
         <div id="settings_div">
-            <h1>Simulation Settings</h1>
+            <h2>Simulation Settings</h2>
             <form id="settings_form">
-                <div class="form_control_div">
-                    <label for="human_count_input" id="human_count_label">Human Count:</label>
-                    <input type="range" id="human_count_input" min="10" max="300" step="1" value="200">
+                <div class="form-group">
+                    <label for="human_count_input" id="human_count_label">
+                        Human Count: <span id="human_count_span" class="value_span"></span>
+                    </label>
+                    <input type="range" id="human_count_input" class="form-control-range" min="10" max="300" step="1"
+                           value="200">
+                    <small id="human_count_help" class="form-text text-muted">
+                        Number of "people" in the simulation.
+                    </small>
                 </div>
 
-                <div class="form_control_div">
-                    <label for="human_sick_probability_input" id="human_sick_probability_label">Human Sick
-                        Probability:</label>
-                    <input type="range" id="human_sick_probability_input" min="0.01" max="1" step="0.01" value="0.20">
+                <div class="form-group">
+                    <label for="human_sick_probability_input" id="human_sick_probability_label">
+                        Human Sick Probability: <span id="human_sick_probability_span" class="value_span"></span>
+                    </label>
+                    <input type="range" id="human_sick_probability_input" class="form-control-range" min="0.01" max="1"
+                           step="0.01" value="0.20">
+                    <small id="human_sick_probability_help" class="form-text text-muted">
+                        Probability of getting sick at the beginning of the simulation.
+                    </small>
                 </div>
 
-                <div class="form_control_div">
-                    <label for="human_stationary_probability_input" id="human_stationary_probability_label">Human
-                        Stationary
-                        Probability:</label>
-                    <input type="range" id="human_stationary_probability_input" min="0.01" max="1" step="0.01"
+                <div class="form-group">
+                    <label for="human_stationary_probability_input" id="human_stationary_probability_label">
+                        Human Stationary Probability: <span id="human_stationary_probability_span" class="value_span"></span>
+                    </label>
+                    <input type="range" id="human_stationary_probability_input" class="form-control-range" min="0.01"
+                           max="1" step="0.01"
                            value="0.60">
+                    <small id="human_stationary_probability_help" class="form-text text-muted">
+                        Probability of not moving.
+                    </small>
                 </div>
 
-                <div class="form_control_div">
-                    <label for="human_death_probability_input" id="human_death_probability_label">Human Death
-                        Probability:</label>
-                    <input type="range" id="human_death_probability_input" min="0.01" max="1" step="0.01" value="0.20">
+                <div class="form-group">
+                    <label for="human_death_probability_input" id="human_death_probability_label">
+                        Human Death Probability: <span id="human_death_probability_span" class="value_span"></span>
+                    </label>
+                    <input type="range" id="human_death_probability_input" class="form-control-range" min="0.01" max="1"
+                           step="0.01" value="0.20">
+                    <small id="human_death_probability_help" class="form-text text-muted">
+                        Probability of dying after getting sick.
+                    </small>
                 </div>
 
-                <div class="form_control_div">
-                    <label for="infection_probability_input" id="infection_probability_label">Infection
-                        Probability:</label>
-                    <input type="range" id="infection_probability_input" min="0.01" max="1" step="0.01" value="0.80">
+                <div class="form-group">
+                    <label for="infection_probability_input" id="infection_probability_label">
+                        Infection Probability: <span id="infection_probability_span" class="value_span"></span>
+                    </label>
+                    <input type="range" id="infection_probability_input" class="form-control-range" min="0.01" max="1"
+                           step="0.01" value="0.80">
+                    <small id="infection_probability_help" class="form-text text-muted">
+                        Probability of getting infected when close to the contagious or sick person.
+                    </small>
                 </div>
 
-                <div class="form_control_div">
-                    <label for="contagious_time_input" id="contagious_time_label">Contagious Time (seconds)</label>
-                    <input type="number" id="contagious_time_input" min="1" step="1" value="60">
+                <div class="form-group">
+                    <label for="contagious_time_input" id="contagious_time_label">
+                        Contagious Time (seconds):
+                    </label>
+                    <input type="number" id="contagious_time_input" class="form-control" min="1" step="1" value="60">
+                    <small id="contagious_time_help" class="form-text text-muted">
+                        Duration of the contagious phase.
+                    </small>
                 </div>
 
-                <div class="form_control_div">
-                    <label for="contagious_time_input" id="sick_time_label">Sick Time (seconds)</label>
-                    <input type="number" id="sick_time_input" min="1" step="1" value="60">
+                <div class="form-group">
+                    <label for="sick_time_input" id="sick_time_label">
+                        Sick Time (seconds):
+                    </label>
+                    <input type="number" id="sick_time_input" class="form-control" min="1" step="1" value="60">
+                    <small id="sick_time_help" class="form-text text-muted">
+                        Duration of the sick phase.
+                    </small>
                 </div>
 
-                <div class="form_control_div">
-                    <label for="max_time_variation_input" id="max_time_variation_label">Max Time Variation (seconds)</label>
-                    <input type="number" id="max_time_variation_input" min="0" step="1" value="5">
+                <div class="form-group">
+                    <label for="max_time_variation_input" id="max_time_variation_label">
+                        Max Time Variation (seconds)
+                    </label>
+                    <input type="number" id="max_time_variation_input" class="form-control" min="0" step="1" value="5">
+                    <small id="max_time_variation_help" class="form-text text-muted">
+                        Maximal variation for the duration of each infection phase.
+                    </small>
                 </div>
 
-                <button type="button" id="reset_button" onclick="simulation.reset(); reset_chart();">Reset</button>
+                <button type="button" id="reset_button" class="btn btn-lg btn-primary"
+                        onclick="simulation.reset(); reset_chart();">Reset simulation
+                </button>
             </form>
         </div>
     </div>
     <div id="statistics_div">
         <canvas id="chart_canvas">
         </canvas>
+    </div>
+    <div id="author_div">
+        <div>
+            <p>&copy; 2020 Damian Kurpiewski</p>
+        </div>
     </div>
 </div>
 <script>
@@ -182,14 +231,15 @@
                     display: true,
                     text: 'Virus Simulation'
                 },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: true
-                },
+                // tooltips: {
+                //     mode: 'index',
+                //     intersect: false,
+                // },
+                events: [],
+                // hover: {
+                //     mode: 'nearest',
+                //     intersect: true
+                // },
                 scales: {
                     xAxes: [{
                         display: true,
@@ -208,6 +258,18 @@
                 }
             }
         };
+    }
+
+    function bind_inputs() {
+        let ids = ['human_count', 'human_sick_probability', 'human_stationary_probability', 'human_death_probability',
+            'infection_probability'];
+        for (let i = 0; i < ids.length; i++) {
+            document.getElementById(ids[i] + '_input').oninput = function () {
+                document.getElementById(ids[i] + '_span').innerHTML = document.getElementById(ids[i] + '_input').value;
+            }
+
+            document.getElementById(ids[i] + '_span').innerHTML = document.getElementById(ids[i] + '_input').value;
+        }
     }
 
     window.onload = function () {
@@ -229,6 +291,8 @@
         document.getElementById('settings_form').addEventListener('submit', function (e) {
             e.preventDefault();
         }, false);
+
+        bind_inputs();
     };
 </script>
 </body>
