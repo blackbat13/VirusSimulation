@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2020-05-02 12:26:25
+// Transcrypt'ed from Python, 2020-05-04 15:46:02
 var math = {};
 var random = {};
 var time = {};
