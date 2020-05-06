@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2020-05-04 15:46:02
+// Transcrypt'ed from Python, 2020-05-06 03:07:01
 var math = {};
 var random = {};
 var time = {};
@@ -24,6 +24,11 @@ export var Human =  __class__ ('Human', [Element], {
 		self._color = settings.HUMAN_STATUS_COLOR [self._status];
 		self._timer = time.time ();
 		self._time_variation = random.randint (-(settings.MAX_TIME_VARIATION), settings.MAX_TIME_VARIATION);
+		self._immune = random.random () < self._settings.HUMAN_IMMUNITY_PROBABILITY;
+		if (self._immune) {
+			self._status = HumanStatus.HEALTHY;
+			self._color = self._settings.HUMAN_STATUS_COLOR [HumanStatus.HEALTHY];
+		}
 	});},
 	get _get_status () {return __get__ (this, function (self) {
 		return self._status;
@@ -64,6 +69,9 @@ export var Human =  __class__ ('Human', [Element], {
 		}
 	});},
 	get change_status () {return __get__ (this, function (self, status) {
+		if (self._immune) {
+			return ;
+		}
 		self._status = status;
 		self._color = self._settings.HUMAN_STATUS_COLOR [self._status];
 	});},

@@ -40,15 +40,34 @@ class SimulationRandom:
         for h in self._human_list:
             h.update()
 
+        self._update_infection()
+
+    def _update_infection(self):
         sick = list(
             filter(lambda h: h.status == HumanStatus.SICK or h.status == HumanStatus.CONTAGIOUS, self._human_list))
         healthy = list(filter(lambda h: h.status == HumanStatus.HEALTHY, self._human_list))
 
+        grid_size = self._settings.INFECTION_DISTANCE * 2
+
+        healthy_grid = [[[] for _ in range(self._settings.HEIGHT // grid_size + 1)] for _ in
+                        range(self._settings.WIDTH // grid_size + 1)]
+
+        for h in healthy:
+            healthy_grid[h.x // grid_size][h.y // grid_size].append(h)
+
         for s in sick:
-            for h in healthy:
-                if s.distance(h) <= self._settings.INFECTION_DISTANCE \
-                        and random.random() < self._settings.INFECTION_PROBABILITY:
-                    h.change_status(HumanStatus.CONTAGIOUS)
+            x = s.x // grid_size
+            y = s.y // grid_size
+            for kx in range(-1, 2):
+                if x + kx < 0 or x + kx >= len(healthy_grid):
+                    continue
+                for ky in range(-1, 2):
+                    if y + ky < 0 or y + ky >= len(healthy_grid[x + kx]):
+                        continue
+                    for h in healthy_grid[x + kx][y + ky]:
+                        if s.distance(h) <= self._settings.INFECTION_DISTANCE and \
+                                random.random() < self._settings.INFECTION_PROBABILITY:
+                            h.change_status(HumanStatus.CONTAGIOUS)
 
     def reset(self):
         self._settings.read_settings()

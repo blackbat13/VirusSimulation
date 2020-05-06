@@ -18,6 +18,7 @@ class Settings:
         self.HUMAN_COUNT = 200
         self.HUMAN_STATIONARY_PROBABILITY = 0.60
         self.HUMAN_SICK_PROBABILITY = 0.20
+        self.HUMAN_IMMUNITY_PROBABILITY = 0
         self.HUMAN_DEATH_PROBABILITY = 0.1
 
         self.CONTAGIOUS_TIME = 60
@@ -41,11 +42,15 @@ class Settings:
         self.HEIGHT = height
 
     def read_settings(self):
-        self.HUMAN_COUNT = document.getElementById('human_count_input').value
-        self.HUMAN_SICK_PROBABILITY = document.getElementById("human_sick_probability_input").value
-        self.HUMAN_STATIONARY_PROBABILITY = document.getElementById("human_stationary_probability_input").value
-        self.HUMAN_DEATH_PROBABILITY = document.getElementById("human_death_probability_input").value
+        self.HUMAN_COUNT = int(document.getElementById('human_count_input').value)
+        self.HUMAN_SICK_PROBABILITY = float(document.getElementById("human_sick_probability_input").value)
+        self.HUMAN_STATIONARY_PROBABILITY = float(document.getElementById("human_stationary_probability_input").value)
+        self.HUMAN_DEATH_PROBABILITY = float(document.getElementById("human_death_probability_input").value)
         self.CONTAGIOUS_TIME = int(document.getElementById("contagious_time_input").value)
         self.SICK_TIME = int(document.getElementById("sick_time_input").value)
         self.MAX_TIME_VARIATION = int(document.getElementById("max_time_variation_input").value)
-        self.INFECTION_PROBABILITY = document.getElementById("infection_probability_input").value
+        self.INFECTION_PROBABILITY = float(document.getElementById("infection_probability_input").value)
+        self.HUMAN_SIZE_RADIUS = int(document.getElementById("human_radius_input").value)
+        self.INFECTION_DISTANCE = 2 * self.HUMAN_SIZE_RADIUS + int(document.getElementById("infection_distance_input").value)
+        self.HUMAN_MAX_VELOCITY = int(document.getElementById("human_max_velocity_input").value)
+        self.HUMAN_IMMUNITY_PROBABILITY = float(document.getElementById("human_immunity_probability_input").value)
