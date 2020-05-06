@@ -20,6 +20,10 @@ class Human(Element):
         self._color = settings.HUMAN_STATUS_COLOR[self._status]
         self._timer = time.time()
         self._time_variation = random.randint(-settings.MAX_TIME_VARIATION, settings.MAX_TIME_VARIATION)
+        self._immune = random.random() < self._settings.HUMAN_IMMUNITY_PROBABILITY
+        if self._immune:
+            self._status = HumanStatus.HEALTHY
+            self._color = self._settings.HUMAN_STATUS_COLOR[HumanStatus.HEALTHY]
 
     @property
     def status(self) -> HumanStatus:
@@ -65,6 +69,8 @@ class Human(Element):
         :param status: new status
         :return: None
         """
+        if self._immune:
+            return
         self._status = status
         self._color = self._settings.HUMAN_STATUS_COLOR[self._status]
 
