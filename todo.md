@@ -6,4 +6,6 @@ Add timeout for infection
 
 Options for manipulating canvas: zoom in, zoom out, move, etc.
 
-Add isolation with probability
+Add isolation with percentage of infected going to isolation
+
+Add cemetery

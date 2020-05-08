@@ -35,6 +35,11 @@ class Settings:
         self.WIDTH = 0
         self.HEIGHT = 0
 
+        self.ISOLATION_WIDTH = 150
+        self.ISOLATION_BARRIER_WIDTH = 10
+        self.ISOLATION_BARRIER_COLOR = "#000000"
+        self.ISOLATION_BG_COLOR = "#aaaaaa"
+
     def set_width(self, width):
         self.WIDTH = width
 
@@ -51,6 +56,7 @@ class Settings:
         self.MAX_TIME_VARIATION = int(document.getElementById("max_time_variation_input").value)
         self.INFECTION_PROBABILITY = float(document.getElementById("infection_probability_input").value)
         self.HUMAN_SIZE_RADIUS = int(document.getElementById("human_radius_input").value)
-        self.INFECTION_DISTANCE = 2 * self.HUMAN_SIZE_RADIUS + int(document.getElementById("infection_distance_input").value)
+        self.INFECTION_DISTANCE = 2 * self.HUMAN_SIZE_RADIUS + int(
+            document.getElementById("infection_distance_input").value)
         self.HUMAN_MAX_VELOCITY = int(document.getElementById("human_max_velocity_input").value)
         self.HUMAN_IMMUNITY_PROBABILITY = float(document.getElementById("human_immunity_probability_input").value)

@@ -1,8 +1,10 @@
 from settings import Settings
 from elements.human import Human
 from elements.human_status import HumanStatus
+from elements.isolation import Isolation
 from elements.road import Road
 from elements.road_type import RoadType
+from elements.margin import Margin
 import random
 
 
@@ -13,7 +15,12 @@ class SimulationRandom:
 
     def __init__(self):
         self._human_list = []
+        self._isolation = None
         self._settings = Settings()
+        self._simulation_margin = Margin(self._settings.ISOLATION_WIDTH + self._settings.ISOLATION_BARRIER_WIDTH,
+                                         0,
+                                         0,
+                                         0)
         self._canvas = document.getElementById('simulation_canvas')
         self._canvas.width = self._canvas.clientWidth
         self._canvas.height = self._canvas.clientHeight
@@ -30,11 +37,15 @@ class SimulationRandom:
         return self._settings
 
     def draw(self):
-        self._context.fillStyle = self._settings.BG_COLOR
-        self._context.fillRect(0, 0, self._settings.WIDTH, self._settings.HEIGHT)
+        self._clear_canvas()
+        self._isolation.draw(self._context)
 
         for h in self._human_list:
             h.draw(self._context)
+
+    def _clear_canvas(self):
+        self._context.fillStyle = self._settings.BG_COLOR
+        self._context.fillRect(0, 0, self._settings.WIDTH, self._settings.HEIGHT)
 
     def update(self):
         for h in self._human_list:
@@ -72,6 +83,7 @@ class SimulationRandom:
     def reset(self):
         self._settings.read_settings()
         self._generate_humans()
+        self._isolation = Isolation(self._settings, (0, 0))
 
     def _generate_humans(self):
         self._human_list = []
@@ -83,20 +95,22 @@ class SimulationRandom:
                 status = HumanStatus.SICK
 
             self._human_list.append(Human(self._settings,
-                                          (random.randint(0, self._settings.WIDTH),
+                                          (random.randint(self._simulation_margin.left + self._settings.HUMAN_SIZE_RADIUS, self._settings.WIDTH),
                                            random.randint(0, self._settings.HEIGHT)),
                                           status,
-                                          random.random() < self._settings.HUMAN_STATIONARY_PROBABILITY))
+                                          random.random() < self._settings.HUMAN_STATIONARY_PROBABILITY,
+                                          self._simulation_margin))
 
     def count(self, status: HumanStatus):
         return sum(1 for h in self._human_list if h.status == status)
 
     def add_sick(self):
         self._human_list.append(Human(self._settings,
-                                      (random.randint(0, self._settings.WIDTH),
+                                      (random.randint(self._simulation_margin.left + self._settings.HUMAN_SIZE_RADIUS, self._settings.WIDTH),
                                        random.randint(0, self._settings.HEIGHT)),
                                       HumanStatus.SICK,
-                                      False))
+                                      False,
+                                      self._simulation_margin))
 
 
 # class SimulationHouses:

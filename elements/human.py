@@ -1,5 +1,6 @@
 from elements.element import Element
 from elements.human_status import HumanStatus
+from elements.margin import Margin
 from settings import Settings
 import random
 import math
@@ -11,12 +12,14 @@ class Human(Element):
     Class for representing a human in the simulation.
     """
 
-    def __init__(self, settings: Settings, position: (int, int), status, stationary):
+    def __init__(self, settings: Settings, position: (int, int), status: HumanStatus, stationary: bool,
+                 simulation_margin: Margin):
         super().__init__(settings, position)
         self._velocity = (0, 0)
         self._radius = settings.HUMAN_SIZE_RADIUS
         self._status = status
         self._stationary = stationary
+        self._simulation_margin = simulation_margin
         self._color = settings.HUMAN_STATUS_COLOR[self._status]
         self._timer = time.time()
         self._time_variation = random.randint(-settings.MAX_TIME_VARIATION, settings.MAX_TIME_VARIATION)
@@ -79,15 +82,15 @@ class Human(Element):
         Clips element position to the bounds of the screen and reverse its velocity.
         :return: None
         """
-        if self._position[0] < self._radius:
-            self._position = (self._radius, self._position[1])
+        if self.x < self._simulation_margin.left + self._radius:
+            self.x = self._radius + self._simulation_margin.left
             self._velocity = (-self._velocity[0], self._velocity[1])
-        if self._position[0] > self._settings.WIDTH - self._radius:
-            self._position = (self._settings.WIDTH - self._radius, self._position[1])
+        if self.x > self._settings.WIDTH - self._radius - self._simulation_margin.right:
+            self.x = self._settings.WIDTH - self._radius - self._simulation_margin.right
             self._velocity = (-self._velocity[0], self._velocity[1])
-        if self._position[1] < self._radius:
-            self._position = (self._position[0], self._radius)
+        if self.y < self._simulation_margin.top + self._radius:
+            self.y = self._radius + self._simulation_margin.top
             self._velocity = (self._velocity[0], -self._velocity[1])
-        if self._position[1] > self._settings.HEIGHT - self._radius:
-            self._position = (self._position[0], self._settings.HEIGHT - self._radius)
+        if self.y > self._settings.HEIGHT - self._radius - self._simulation_margin.bottom:
+            self.y = self._settings.HEIGHT - self._radius - self._simulation_margin.bottom
             self._velocity = (self._velocity[0], -self._velocity[1])
