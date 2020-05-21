@@ -79,7 +79,6 @@ class Human(Element):
         Clips element position to the bounds of the screen and reverse its velocity.
         :return: None
         """
-        console.log(self.bounds.left)
         if self._position[0] < self.bounds.left + self._radius:
             self._position = (self.bounds.left + self._radius, self._position[1])
             self._velocity = (-self._velocity[0], self._velocity[1])

@@ -9,12 +9,27 @@ class OpenWorld(Container):
     Class for representing a human in the simulation.
     """
 
-    def __init__(self, settings: Settings, position: (int, int), size: (int, int)):
-        super().__init__(settings, position, size)
+    def __init__(self, settings: Settings, position: (int, int), size: (int, int), simulation):
+        super().__init__(settings, position, size, simulation)
 
     def update(self):
         Container.update(self)
+        self._update_isolation()
         self._update_infection()
+
+    def _update_isolation(self):
+        if self._simulation.is_isolation_full():
+            return
+        sick = list(
+            filter(lambda h: h.status == HumanStatus.SICK, self._elements))
+        for s in sick:
+            if random.random() >= self._settings.isolation_probability:
+                continue
+            self._simulation.add_to_isolation(s)
+            self._elements.remove(s)
+            if self._simulation.is_isolation_full():
+                return
+
 
     def _update_infection(self):
         sick = list(

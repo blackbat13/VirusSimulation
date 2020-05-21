@@ -36,13 +36,25 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="isolation_capacity_input" id="isolation_capacity_label">
+                        Isolation Capacity: <span id="isolation_capacity_span" class="value_span"></span>
+                    </label>
+                    <input type="range" id="isolation_capacity_input" class="form-control-range" min="0" max="500"
+                           step="1"
+                           value="50">
+                    <small id="isolation_capacity_help" class="form-text text-muted">
+                        Maximum number of "people" in the isolation.
+                    </small>
+                </div>
+
+                <div class="form-group">
                     <label for="human_radius_input" id="human_radius_label">
                         Human Radius: <span id="human_radius_span" class="value_span"></span>
                     </label>
                     <input type="range" id="human_radius_input" class="form-control-range" min="1" max="10"
                            step="1" value="5">
                     <small id="human_radius_help" class="form-text text-muted">
-                       Radius of the human element.
+                        Radius of the human element.
                     </small>
                 </div>
 
@@ -59,9 +71,11 @@
 
                 <div class="form-group">
                     <label for="human_immunity_probability_input" id="human_immunity_probability_label">
-                        Human Immunity Probability: <span id="human_immunity_probability_span" class="value_span"></span>
+                        Human Immunity Probability: <span id="human_immunity_probability_span"
+                                                          class="value_span"></span>
                     </label>
-                    <input type="range" id="human_immunity_probability_input" class="form-control-range" min="0.00" max="1"
+                    <input type="range" id="human_immunity_probability_input" class="form-control-range" min="0.00"
+                           max="1"
                            step="0.001" value="0.000">
                     <small id="human_immunity_probability_help" class="form-text text-muted">
                         Probability of having a natural immunity to the virus.
@@ -121,7 +135,7 @@
                     <input type="range" id="human_max_velocity_input" class="form-control-range" min="1" max="10"
                            step="1" value="2">
                     <small id="human_max_velocity_help" class="form-text text-muted">
-                       Maximal velocity of the human element.
+                        Maximal velocity of the human element.
                     </small>
                 </div>
 
@@ -312,7 +326,7 @@
     }
 
     function bind_inputs() {
-        let ids = ['human_count', 'human_sick_probability', 'human_stationary_probability', 'human_death_probability',
+        let ids = ['human_count', 'isolation_capacity', 'human_sick_probability', 'human_stationary_probability', 'human_death_probability',
             'infection_probability', 'infection_distance', 'human_radius', 'human_max_velocity', 'human_immunity_probability'];
         for (let i = 0; i < ids.length; i++) {
             document.getElementById(ids[i] + '_input').oninput = function () {

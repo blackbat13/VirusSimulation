@@ -8,11 +8,12 @@ class Container:
     Abstract class for representing a container of the simulation.
     """
 
-    def __init__(self, settings: Settings, position: (int, int), size: (int, int)):
+    def __init__(self, settings: Settings, position: (int, int), size: (int, int), simulation):
         self._settings = settings
         self._position: (int, int) = position
         self._size: (int, int) = size
         self._elements: list = []
+        self._simulation = simulation
 
     @property
     def width(self) -> int:
@@ -74,3 +75,9 @@ class Container:
 
     def count(self, status: HumanStatus):
         return sum(1 for h in self._elements if h.status == status)
+
+    def clear(self):
+        self._elements.clear()
+
+    def elements_count(self):
+        return len(self._elements)

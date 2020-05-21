@@ -2,6 +2,7 @@ from settings import Settings
 from elements.human import Human
 from elements.human_status import HumanStatus
 from elements.open_world import OpenWorld
+from elements.isolation import Isolation
 import random
 
 
@@ -22,7 +23,10 @@ class SimulationRandom:
         self._context = self._canvas.getContext('2d')
 
         self._open_world = OpenWorld(self._settings, (self._settings.isolation_width, 0),
-                                     (self._settings.width - self._settings.isolation_width, self._settings.height))
+                                     (self._settings.width - self._settings.isolation_width, self._settings.height),
+                                     self)
+        self._isolation = Isolation(self._settings, (0, 0), (self._settings.isolation_width, self._settings.height),
+                                    self)
         self.reset()
 
     @property
@@ -33,16 +37,19 @@ class SimulationRandom:
         self._context.fillStyle = self._settings.bg_color
         self._context.fillRect(0, 0, self._settings.width, self._settings.height)
         self._open_world.draw(self._context)
+        self._isolation.draw(self._context)
 
     def update(self):
         self._open_world.update()
+        self._isolation.update()
 
     def reset(self):
         self._settings.read_settings()
         self._generate_humans()
 
     def _generate_humans(self):
-        # TODO Clear elements
+        self._open_world.clear()
+        self._isolation.clear()
         for _ in range(self._settings.human_count):
             status = HumanStatus.HEALTHY
 
@@ -60,6 +67,15 @@ class SimulationRandom:
         self._open_world.add_element(Human(self._settings,
                                            HumanStatus.SICK,
                                            False))
+
+    def add_to_open_world(self, element):
+        self._open_world.add_element(element)
+
+    def add_to_isolation(self, element):
+        self._isolation.add_element(element)
+
+    def is_isolation_full(self):
+        return self._isolation.elements_count() >= self._settings.isolation_capacity
 
 
 simulation = SimulationRandom()

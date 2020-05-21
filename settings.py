@@ -33,6 +33,9 @@ class Settings:
 
         self.__isolation_width_percentage = 0.1
         self.__isolation_width = 0
+        self.__isolation_capacity = 50
+        self.__isolation_probability = 1
+        self.__isolation_background_color = "#D3D3D3"
 
     @property
     def bg_color(self) -> str:
@@ -99,6 +102,18 @@ class Settings:
         return self.__human_max_velocity
 
     @property
+    def isolation_capacity(self) -> int:
+        return self.__isolation_capacity
+
+    @property
+    def isolation_probability(self) -> float:
+        return self.__isolation_probability
+
+    @property
+    def isolation_background_color(self) -> str:
+        return self.__isolation_background_color
+
+    @property
     def width(self) -> int:
         return self.__width
 
@@ -129,3 +144,5 @@ class Settings:
             document.getElementById("infection_distance_input").value)
         self.__human_max_velocity = int(document.getElementById("human_max_velocity_input").value)
         self.__human_immunity_probability = float(document.getElementById("human_immunity_probability_input").value)
+        self.__isolation_capacity = int(document.getElementById("isolation_capacity_input").value)
+        # self.__isolation_probability = float(document.getElementById("isolation_probability_input").value)
