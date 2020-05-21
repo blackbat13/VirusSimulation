@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2020-05-06 03:07:01
+// Transcrypt'ed from Python, 2020-05-21 20:31:05
 var math = {};
 var random = {};
 var time = {};
@@ -15,19 +15,19 @@ import {Element} from './elements.element.js';
 var __name__ = 'elements.human';
 export var Human =  __class__ ('Human', [Element], {
 	__module__: __name__,
-	get __init__ () {return __get__ (this, function (self, settings, position, status, stationary) {
-		__super__ (Human, '__init__') (self, settings, position);
+	get __init__ () {return __get__ (this, function (self, settings, status, stationary) {
+		__super__ (Human, '__init__') (self, settings);
 		self._velocity = tuple ([0, 0]);
-		self._radius = settings.HUMAN_SIZE_RADIUS;
+		self._radius = settings.human_size_radius;
 		self._status = status;
 		self._stationary = stationary;
-		self._color = settings.HUMAN_STATUS_COLOR [self._status];
+		self._color = settings.human_status_color [self._status];
 		self._timer = time.time ();
-		self._time_variation = random.randint (-(settings.MAX_TIME_VARIATION), settings.MAX_TIME_VARIATION);
-		self._immune = random.random () < self._settings.HUMAN_IMMUNITY_PROBABILITY;
+		self._time_variation = random.randint (-(settings.max_time_variation), settings.max_time_variation);
+		self._immune = random.random () < self._settings.human_immunity_probability;
 		if (self._immune) {
 			self._status = HumanStatus.HEALTHY;
-			self._color = self._settings.HUMAN_STATUS_COLOR [HumanStatus.HEALTHY];
+			self._color = self._settings.human_status_color [HumanStatus.HEALTHY];
 		}
 	});},
 	get _get_status () {return __get__ (this, function (self) {
@@ -48,18 +48,18 @@ export var Human =  __class__ ('Human', [Element], {
 	get _update_position () {return __get__ (this, function (self) {
 		self._position = tuple ([self._position [0] + self._velocity [0], self._position [1] + self._velocity [1]]);
 		self._position_to_bounds ();
-		if (random.random () < self._settings.HUMAN_CHANGE_VELOCITY_PROBABILITY) {
-			self._velocity = tuple ([random.randint (-(self._settings.HUMAN_MAX_VELOCITY), self._settings.HUMAN_MAX_VELOCITY), random.randint (-(self._settings.HUMAN_MAX_VELOCITY), self._settings.HUMAN_MAX_VELOCITY)]);
+		if (random.random () < self._settings.human_change_velocity_probability) {
+			self._velocity = tuple ([random.randint (-(self._settings.human_max_velocity), self._settings.human_max_velocity), random.randint (-(self._settings.human_max_velocity), self._settings.human_max_velocity)]);
 		}
 	});},
 	get _update_status () {return __get__ (this, function (self) {
-		if (self._status == HumanStatus.CONTAGIOUS && time.time () - self._timer > self._settings.CONTAGIOUS_TIME + self._time_variation) {
+		if (self._status == HumanStatus.CONTAGIOUS && time.time () - self._timer > self._settings.contagious_time + self._time_variation) {
 			self._timer = time.time ();
 			self.change_status (HumanStatus.SICK);
 		}
-		if (self._status == HumanStatus.SICK && time.time () - self._timer > self._settings.SICK_TIME + self._time_variation) {
+		if (self._status == HumanStatus.SICK && time.time () - self._timer > self._settings.sick_time + self._time_variation) {
 			self._timer = time.time ();
-			if (random.random () < self._settings.HUMAN_DEATH_PROBABILITY) {
+			if (random.random () < self._settings.human_death_probability) {
 				self.change_status (HumanStatus.DEAD);
 				self._stationary = true;
 			}
@@ -73,23 +73,23 @@ export var Human =  __class__ ('Human', [Element], {
 			return ;
 		}
 		self._status = status;
-		self._color = self._settings.HUMAN_STATUS_COLOR [self._status];
+		self._color = self._settings.human_status_color [self._status];
 	});},
 	get _position_to_bounds () {return __get__ (this, function (self) {
-		if (self._position [0] < self._radius) {
-			self._position = tuple ([self._radius, self._position [1]]);
+		if (self._position [0] < self.bounds.left + self._radius) {
+			self._position = tuple ([self.bounds.left + self._radius, self._position [1]]);
 			self._velocity = tuple ([-(self._velocity [0]), self._velocity [1]]);
 		}
-		if (self._position [0] > self._settings.WIDTH - self._radius) {
-			self._position = tuple ([self._settings.WIDTH - self._radius, self._position [1]]);
+		if (self._position [0] > self.bounds.right - self._radius) {
+			self._position = tuple ([self.bounds.right - self._radius, self._position [1]]);
 			self._velocity = tuple ([-(self._velocity [0]), self._velocity [1]]);
 		}
-		if (self._position [1] < self._radius) {
-			self._position = tuple ([self._position [0], self._radius]);
+		if (self._position [1] < self.bounds.top + self._radius) {
+			self._position = tuple ([self._position [0], self.bounds.top + self._radius]);
 			self._velocity = tuple ([self._velocity [0], -(self._velocity [1])]);
 		}
-		if (self._position [1] > self._settings.HEIGHT - self._radius) {
-			self._position = tuple ([self._position [0], self._settings.HEIGHT - self._radius]);
+		if (self._position [1] > self.bounds.bottom - self._radius) {
+			self._position = tuple ([self._position [0], self.bounds.bottom - self._radius]);
 			self._velocity = tuple ([self._velocity [0], -(self._velocity [1])]);
 		}
 	});}

@@ -1,0 +1,8 @@
+{
+	"version": 3,
+	"file": "elements.isolation.js",
+	"sources": [
+		"elements.isolation.py"
+	],
+	"mappings": "AAAA;AAAA;AAAA;AAAA;AAIA;AAAA;AADA;AAAA;AADA;AADA;AADA;AAAA;AAOA;AAAA;AAKA;AACA;AAAA;AAEA;AACA;AACA;AACA;AAAA;AAEA;AACA;AACA;AACA;AACA;AAAA;AAEA;AACA;AAAA;AAAA;AACA;AACA;AACA;AAAA;AAAA;AAAA;AA9BA"
+}
