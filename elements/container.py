@@ -1,31 +1,30 @@
-import math
-import random
 from settings import Settings
-from elements.container import Container
 from elements.bounds import Bounds
+from elements.human_status import HumanStatus
 
 
-class Element:
+class Container:
     """
-    Abstract class for representing an element of the simulation.
+    Abstract class for representing a container of the simulation.
     """
 
-    def __init__(self, settings: Settings):
+    def __init__(self, settings: Settings, position: (int, int), size: (int, int)):
         self._settings = settings
-        self._position: (int, int) = (0, 0)
-        self._parent: Container = None
+        self._position: (int, int) = position
+        self._size: (int, int) = size
+        self._elements: list = []
 
     @property
-    def parent(self) -> Container:
-        return self._parent
+    def width(self) -> int:
+        return self._size[0]
 
-    @parent.setter
-    def parent(self, value: Container):
-        self._parent = value
+    @property
+    def height(self) -> int:
+        return self._size[1]
 
     @property
     def bounds(self) -> Bounds:
-        return self._parent.bounds
+        return Bounds(self.x, self.x + self.width, self.y, self.y + self.height)
 
     @property
     def position(self) -> (int, int):
@@ -51,25 +50,27 @@ class Element:
     def y(self, value: int):
         self._position = (self._position[0], value)
 
-    def set_random_position(self):
-        self.x = random.randint(self.bounds.left, self.bounds.right)
-        self.y = random.randint(self.bounds.top, self.bounds.bottom)
-
-    def distance(self, element):
-        return math.sqrt((self.x - element.x) ** 2 + (self.y - element.y) ** 2)
-
     def draw(self, context):
         """
         Draws element on the screen.
         :param context: HTML canvas context to draw on
         :return: None
         """
-        pass
+        for element in self._elements:
+            element.draw(context)
 
     def update(self):
         """
         Updates the element position etc.
         :return: None
         """
-        pass
+        for element in self._elements:
+            element.update()
 
+    def add_element(self, element):
+        element.parent = self
+        element.set_random_position()
+        self._elements.append(element)
+
+    def count(self, status: HumanStatus):
+        return sum(1 for h in self._elements if h.status == status)
