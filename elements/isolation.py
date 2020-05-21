@@ -7,7 +7,7 @@ import math
 
 class Isolation(Container):
     """
-    Class for representing a human in the simulation.
+    Isolation container.
     """
 
     def __init__(self, settings: Settings, position: (int, int), size: (int, int), simulation):
@@ -16,21 +16,13 @@ class Isolation(Container):
     def update(self):
         Container.update(self)
         self._remove_recovered()
+        self._update_cemetery()
 
     def draw(self, context):
         context.fillStyle = self._settings.isolation_background_color
         context.fillRect(self.x, self.y, self.width, self.height)
-        self._draw_text(context)
+        self._draw_text(context, "ISOLATION")
         Container.draw(self, context)
-
-    def _draw_text(self, context):
-        context.fillStyle = "black"
-        context.textAlign = "center"
-        context.font = "30px Arial"
-        text = "ISOLATION"
-        for i in range(len(text)):
-            y = (i+1) * (self.height / (len(text) + 1)) + self.y
-            context.fillText(text[i], (self.x + self.width) // 2, y)
 
     def _remove_recovered(self):
         recovered = list(filter(lambda h: h.status == HumanStatus.RECOVERED, self._elements))

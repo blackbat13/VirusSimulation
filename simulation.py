@@ -3,6 +3,7 @@ from elements.human import Human
 from elements.human_status import HumanStatus
 from elements.open_world import OpenWorld
 from elements.isolation import Isolation
+from elements.cemetery import Cemetery
 import random
 
 
@@ -23,10 +24,14 @@ class SimulationRandom:
         self._context = self._canvas.getContext('2d')
 
         self._open_world = OpenWorld(self._settings, (self._settings.isolation_width, 0),
-                                     (self._settings.width - self._settings.isolation_width, self._settings.height),
+                                     (
+                                     self._settings.width - self._settings.isolation_width - self._settings.cemetery_width,
+                                     self._settings.height),
                                      self)
         self._isolation = Isolation(self._settings, (0, 0), (self._settings.isolation_width, self._settings.height),
                                     self)
+        self._cemetery = Cemetery(self._settings, (self._settings.width - self._settings.cemetery_width, 0),
+                                  (self._settings.cemetery_width, self._settings.height), self)
         self.reset()
 
     @property
@@ -38,10 +43,12 @@ class SimulationRandom:
         self._context.fillRect(0, 0, self._settings.width, self._settings.height)
         self._open_world.draw(self._context)
         self._isolation.draw(self._context)
+        self._cemetery.draw(self._context)
 
     def update(self):
         self._open_world.update()
         self._isolation.update()
+        self._cemetery.update()
 
     def reset(self):
         self._settings.read_settings()
@@ -50,6 +57,7 @@ class SimulationRandom:
     def _generate_humans(self):
         self._open_world.clear()
         self._isolation.clear()
+        self._cemetery.clear()
         for _ in range(self._settings.human_count):
             status = HumanStatus.HEALTHY
 
@@ -73,6 +81,9 @@ class SimulationRandom:
 
     def add_to_isolation(self, element):
         self._isolation.add_element(element)
+
+    def add_to_cemetery(self, element):
+        self._cemetery.add_element(element)
 
     def is_isolation_full(self):
         return self._isolation.elements_count() >= self._settings.isolation_capacity

@@ -6,7 +6,7 @@ import random
 
 class OpenWorld(Container):
     """
-    Class for representing a human in the simulation.
+    Open world container.
     """
 
     def __init__(self, settings: Settings, position: (int, int), size: (int, int), simulation):
@@ -16,6 +16,7 @@ class OpenWorld(Container):
         Container.update(self)
         self._update_isolation()
         self._update_infection()
+        self._update_cemetery()
 
     def _update_isolation(self):
         if self._simulation.is_isolation_full():
@@ -23,13 +24,12 @@ class OpenWorld(Container):
         sick = list(
             filter(lambda h: h.status == HumanStatus.SICK, self._elements))
         for s in sick:
-            if random.random() >= self._settings.isolation_probability:
+            if random.random() > self._settings.isolation_probability:
                 continue
             self._simulation.add_to_isolation(s)
             self._elements.remove(s)
             if self._simulation.is_isolation_full():
                 return
-
 
     def _update_infection(self):
         sick = list(

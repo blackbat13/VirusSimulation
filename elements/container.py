@@ -68,6 +68,12 @@ class Container:
         for element in self._elements:
             element.update()
 
+    def _update_cemetery(self):
+        dead = list(filter(lambda h: h.status == HumanStatus.DEAD, self._elements))
+        for d in dead:
+            self._simulation.add_to_cemetery(d)
+            self._elements.remove(d)
+
     def add_element(self, element):
         element.parent = self
         element.set_random_position()
@@ -81,3 +87,11 @@ class Container:
 
     def elements_count(self):
         return len(self._elements)
+
+    def _draw_text(self, context, text: str):
+        context.fillStyle = "black"
+        context.textAlign = "center"
+        context.font = "30px Arial"
+        for i in range(len(text)):
+            y = (i+1) * (self.height / (len(text) + 1)) + self.y
+            context.fillText(text[i], (self.x * 2 + self.width) // 2, y)

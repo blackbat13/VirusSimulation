@@ -37,6 +37,10 @@ class Settings:
         self.__isolation_probability = 1
         self.__isolation_background_color = "#D3D3D3"
 
+        self.__cemetery_width_percentage = 0.05
+        self.__cemetery_width = 0
+        self.__cemetery_background_color = "#D3D3D3"
+
     @property
     def bg_color(self) -> str:
         return self.__bg_color
@@ -114,6 +118,14 @@ class Settings:
         return self.__isolation_background_color
 
     @property
+    def cemetery_width(self) -> int:
+        return self.__cemetery_width
+
+    @property
+    def cemetery_background_color(self) -> str:
+        return self.__cemetery_background_color
+
+    @property
     def width(self) -> int:
         return self.__width
 
@@ -121,6 +133,7 @@ class Settings:
     def width(self, value: int):
         self.__width = value
         self.__isolation_width = int(self.__isolation_width_percentage * self.__width)
+        self.__cemetery_width = int(self.__cemetery_width_percentage * self.__width)
 
     @property
     def height(self) -> int:
