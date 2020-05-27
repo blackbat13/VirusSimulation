@@ -24,12 +24,18 @@ class OpenWorld(Container):
         sick = list(
             filter(lambda h: h.status == HumanStatus.SICK, self._elements))
         for s in sick:
-            if random.random() > self._settings.isolation_probability:
+            # if random.random() > self._settings.isolation_probability:
+            #     continue
+
+            if s.to_isolation_counter == -1:
+                s.to_isolation_counter = random.randint(500, 1200)
                 continue
-            self._simulation.add_to_isolation(s)
-            self._elements.remove(s)
-            if self._simulation.is_isolation_full():
-                return
+            s.decrement_isolation_counter()
+            if s.to_isolation_counter <= 0:
+                self._simulation.add_to_isolation(s)
+                self._elements.remove(s)
+                if self._simulation.is_isolation_full():
+                    return
 
     def _update_infection(self):
         sick = list(
