@@ -28,10 +28,33 @@
                     <label for="human_count_input" id="human_count_label">
                         Human Count: <span id="human_count_span" class="value_span"></span>
                     </label>
-                    <input type="range" id="human_count_input" class="form-control-range" min="10" max="300" step="1"
+                    <input type="range" id="human_count_input" class="form-control-range" min="10" max="1500" step="1"
                            value="200">
                     <small id="human_count_help" class="form-text text-muted">
                         Number of "people" in the simulation.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="isolation_capacity_input" id="isolation_capacity_label">
+                        Isolation Capacity: <span id="isolation_capacity_span" class="value_span"></span>
+                    </label>
+                    <input type="range" id="isolation_capacity_input" class="form-control-range" min="0" max="500"
+                           step="1"
+                           value="50">
+                    <small id="isolation_capacity_help" class="form-text text-muted">
+                        Maximum number of "people" in the isolation.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="human_radius_input" id="human_radius_label">
+                        Human Radius: <span id="human_radius_span" class="value_span"></span>
+                    </label>
+                    <input type="range" id="human_radius_input" class="form-control-range" min="1" max="10"
+                           step="1" value="5">
+                    <small id="human_radius_help" class="form-text text-muted">
+                        Radius of the human element.
                     </small>
                 </div>
 
@@ -43,6 +66,19 @@
                            step="0.01" value="0.20">
                     <small id="human_sick_probability_help" class="form-text text-muted">
                         Probability of getting sick at the beginning of the simulation.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="human_immunity_probability_input" id="human_immunity_probability_label">
+                        Human Immunity Probability: <span id="human_immunity_probability_span"
+                                                          class="value_span"></span>
+                    </label>
+                    <input type="range" id="human_immunity_probability_input" class="form-control-range" min="0.00"
+                           max="1"
+                           step="0.001" value="0.000">
+                    <small id="human_immunity_probability_help" class="form-text text-muted">
+                        Probability of having a natural immunity to the virus.
                     </small>
                 </div>
 
@@ -63,7 +99,7 @@
                     <label for="human_death_probability_input" id="human_death_probability_label">
                         Human Death Probability: <span id="human_death_probability_span" class="value_span"></span>
                     </label>
-                    <input type="range" id="human_death_probability_input" class="form-control-range" min="0.01" max="1"
+                    <input type="range" id="human_death_probability_input" class="form-control-range" min="0.00" max="1"
                            step="0.01" value="0.20">
                     <small id="human_death_probability_help" class="form-text text-muted">
                         Probability of dying after getting sick.
@@ -78,6 +114,28 @@
                            step="0.01" value="0.80">
                     <small id="infection_probability_help" class="form-text text-muted">
                         Probability of getting infected when close to the contagious or sick person.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="infection_distance_input" id="infection_distance_label">
+                        Infection Distance: <span id="infection_distance_span" class="value_span"></span>
+                    </label>
+                    <input type="range" id="infection_distance_input" class="form-control-range" min="0" max="50"
+                           step="1" value="5">
+                    <small id="infection_distance_help" class="form-text text-muted">
+                        Maximal distance at which infection occurs.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="human_max_velocity_input" id="human_max_velocity_label">
+                        Human Max Velocity: <span id="human_max_velocity_span" class="value_span"></span>
+                    </label>
+                    <input type="range" id="human_max_velocity_input" class="form-control-range" min="1" max="10"
+                           step="1" value="2">
+                    <small id="human_max_velocity_help" class="form-text text-muted">
+                        Maximal velocity of the human element.
                     </small>
                 </div>
 
@@ -197,37 +255,37 @@
                     {
                         label: 'Healthy',
                         fill: false,
-                        backgroundColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.HEALTHY],
-                        borderColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.HEALTHY],
+                        backgroundColor: simulation.settings.human_status_color[HumanStatus.HEALTHY],
+                        borderColor: simulation.settings.human_status_color[HumanStatus.HEALTHY],
                         data: [],
                         // pointRadius: 0,
                     },
                     {
                         label: 'Contagious',
                         fill: false,
-                        backgroundColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.CONTAGIOUS],
-                        borderColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.CONTAGIOUS],
+                        backgroundColor: simulation.settings.human_status_color[HumanStatus.CONTAGIOUS],
+                        borderColor: simulation.settings.human_status_color[HumanStatus.CONTAGIOUS],
                         data: []
                     },
                     {
                         label: 'Sick',
                         fill: false,
-                        backgroundColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.SICK],
-                        borderColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.SICK],
+                        backgroundColor: simulation.settings.human_status_color[HumanStatus.SICK],
+                        borderColor: simulation.settings.human_status_color[HumanStatus.SICK],
                         data: []
                     },
                     {
                         label: 'Recovered',
                         fill: false,
-                        backgroundColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.RECOVERED],
-                        borderColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.RECOVERED],
+                        backgroundColor: simulation.settings.human_status_color[HumanStatus.RECOVERED],
+                        borderColor: simulation.settings.human_status_color[HumanStatus.RECOVERED],
                         data: []
                     },
                     {
                         label: 'Dead',
                         fill: false,
-                        backgroundColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.DEAD],
-                        borderColor: simulation.settings.HUMAN_STATUS_COLOR[HumanStatus.DEAD],
+                        backgroundColor: simulation.settings.human_status_color[HumanStatus.DEAD],
+                        borderColor: simulation.settings.human_status_color[HumanStatus.DEAD],
                         data: []
                     }
                 ]
@@ -268,8 +326,8 @@
     }
 
     function bind_inputs() {
-        let ids = ['human_count', 'human_sick_probability', 'human_stationary_probability', 'human_death_probability',
-            'infection_probability'];
+        let ids = ['human_count', 'isolation_capacity', 'human_sick_probability', 'human_stationary_probability', 'human_death_probability',
+            'infection_probability', 'infection_distance', 'human_radius', 'human_max_velocity', 'human_immunity_probability'];
         for (let i = 0; i < ids.length; i++) {
             document.getElementById(ids[i] + '_input').oninput = function () {
                 document.getElementById(ids[i] + '_span').innerHTML = document.getElementById(ids[i] + '_input').value;
