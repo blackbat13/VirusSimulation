@@ -69,7 +69,7 @@ class SimulationRandom:
                                                random.random() < self._settings.human_stationary_probability))
 
     def count(self, status: HumanStatus):
-        return self._open_world.count(status)
+        return self._open_world.count(status) + self._isolation.count(status)
 
     def add_sick(self):
         self._open_world.add_element(Human(self._settings,
