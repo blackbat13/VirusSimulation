@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2020-06-03 11:39:17
+// Transcrypt'ed from Python, 2020-06-03 13:45:45
 var math = {};
 var random = {};
 var time = {};
@@ -25,23 +25,23 @@ export var Human =  __class__ ('Human', [Element], {
 		self._timer = time.time ();
 		self._time_variation = random.randint (-(settings.max_time_variation), settings.max_time_variation);
 		self._immune = random.random () < self._settings.human_immunity_probability;
-		self._to_isolation_counter = -(1);
+		self._to_isolation_timer = 0;
 		if (self._immune) {
 			self._status = HumanStatus.HEALTHY;
 			self._color = self._settings.human_status_color [HumanStatus.HEALTHY];
 		}
 	});},
-	get _get_to_isolation_counter () {return __get__ (this, function (self) {
-		return self._to_isolation_counter;
-	});},
-	get decrement_isolation_counter () {return __get__ (this, function (self) {
-		self._to_isolation_counter -= 1;
-	});},
-	get _set_to_isolation_counter () {return __get__ (this, function (self, value) {
-		self._to_isolation_counter += value;
-	});},
 	get _get_status () {return __get__ (this, function (self) {
 		return self._status;
+	});},
+	get start_isolation_timer () {return __get__ (this, function (self) {
+		self._to_isolation_timer = time.time ();
+	});},
+	get check_isolation_timer () {return __get__ (this, function (self) {
+		if (self._to_isolation_timer == 0) {
+			self.start_isolation_timer ();
+		}
+		return time.time () - self._to_isolation_timer > self._settings.to_isolation_time + self._time_variation;
 	});},
 	get draw () {return __get__ (this, function (self, context) {
 		context.fillStyle = self._color;
@@ -104,7 +104,6 @@ export var Human =  __class__ ('Human', [Element], {
 		}
 	});}
 });
-Object.defineProperty (Human, 'status', property.call (Human, Human._get_status));
-Object.defineProperty (Human, 'to_isolation_counter', property.call (Human, Human._get_to_isolation_counter, Human._set_to_isolation_counter));;
+Object.defineProperty (Human, 'status', property.call (Human, Human._get_status));;
 
 //# sourceMappingURL=elements.human.map
