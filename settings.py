@@ -41,6 +41,8 @@ class Settings:
         self.__cemetery_width = 0
         self.__cemetery_background_color = "#D3D3D3"
 
+        self.__to_isolation_time = 10
+
     @property
     def bg_color(self) -> str:
         return self.__bg_color
@@ -126,6 +128,10 @@ class Settings:
         return self.__cemetery_background_color
 
     @property
+    def to_isolation_time(self) -> int:
+        return self.__to_isolation_time
+
+    @property
     def width(self) -> int:
         return self.__width
 
@@ -158,4 +164,4 @@ class Settings:
         self.__human_max_velocity = int(document.getElementById("human_max_velocity_input").value)
         self.__human_immunity_probability = float(document.getElementById("human_immunity_probability_input").value)
         self.__isolation_capacity = int(document.getElementById("isolation_capacity_input").value)
-        # self.__isolation_probability = float(document.getElementById("isolation_probability_input").value)
+        self.__to_isolation_time = int(document.getElementById("to_isolation_time_input").value)

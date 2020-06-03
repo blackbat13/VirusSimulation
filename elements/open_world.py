@@ -2,6 +2,7 @@ from elements.container import Container
 from elements.human_status import HumanStatus
 from settings import Settings
 import random
+import time
 
 
 class OpenWorld(Container):
@@ -24,14 +25,7 @@ class OpenWorld(Container):
         sick = list(
             filter(lambda h: h.status == HumanStatus.SICK, self._elements))
         for s in sick:
-            # if random.random() > self._settings.isolation_probability:
-            #     continue
-
-            if s.to_isolation_counter == -1:
-                s.to_isolation_counter = random.randint(500, 1200)
-                continue
-            s.decrement_isolation_counter()
-            if s.to_isolation_counter <= 0:
+            if s.check_isolation_timer():
                 self._simulation.add_to_isolation(s)
                 self._elements.remove(s)
                 if self._simulation.is_isolation_full():

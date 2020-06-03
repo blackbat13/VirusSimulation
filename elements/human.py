@@ -21,25 +21,22 @@ class Human(Element):
         self._timer = time.time()
         self._time_variation = random.randint(-settings.max_time_variation, settings.max_time_variation)
         self._immune = random.random() < self._settings.human_immunity_probability
-        self._to_isolation_counter = -1
+        self._to_isolation_timer = 0
         if self._immune:
             self._status = HumanStatus.HEALTHY
             self._color = self._settings.human_status_color[HumanStatus.HEALTHY]
 
     @property
-    def to_isolation_counter(self) -> int:
-        return self._to_isolation_counter
-
-    def decrement_isolation_counter(self):
-        self._to_isolation_counter -= 1
-
-    @to_isolation_counter.setter
-    def to_isolation_counter(self, value: int):
-        self._to_isolation_counter += value
-
-    @property
     def status(self) -> HumanStatus:
         return self._status
+
+    def start_isolation_timer(self):
+        self._to_isolation_timer = time.time()
+
+    def check_isolation_timer(self) -> bool:
+        if self._to_isolation_timer == 0:
+            self.start_isolation_timer()
+        return (time.time() - self._to_isolation_timer) > (self._settings.to_isolation_time + self._time_variation)
 
     def draw(self, context):
         context.fillStyle = self._color
