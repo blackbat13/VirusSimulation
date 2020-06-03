@@ -7,7 +7,7 @@ from elements.cemetery import Cemetery
 import random
 
 
-class SimulationRandom:
+class Simulation:
     """
     Class for simulation environment.
     """
@@ -25,8 +25,8 @@ class SimulationRandom:
 
         self._open_world = OpenWorld(self._settings, (self._settings.isolation_width, 0),
                                      (
-                                     self._settings.width - self._settings.isolation_width - self._settings.cemetery_width,
-                                     self._settings.height),
+                                         self._settings.width - self._settings.isolation_width - self._settings.cemetery_width,
+                                         self._settings.height),
                                      self)
         self._isolation = Isolation(self._settings, (0, 0), (self._settings.isolation_width, self._settings.height),
                                     self)
@@ -72,9 +72,10 @@ class SimulationRandom:
         return self._open_world.count(status) + self._isolation.count(status)
 
     def add_sick(self):
-        self._open_world.add_element(Human(self._settings,
-                                           HumanStatus.SICK,
-                                           False))
+        self._open_world.add_element(Human(self._settings, HumanStatus.SICK, False))
+
+    def add_healthy(self):
+        self._open_world.add_element(Human(self._settings, HumanStatus.HEALTHY, False))
 
     def add_to_open_world(self, element):
         self._open_world.add_element(element)
@@ -89,4 +90,4 @@ class SimulationRandom:
         return self._isolation.elements_count() >= self._settings.isolation_capacity
 
 
-simulation = SimulationRandom()
+simulation = Simulation()
