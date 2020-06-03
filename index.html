@@ -160,6 +160,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="sick_time_input" id="to_isolation_time_label">
+                        To Isolation Time (seconds):
+                    </label>
+                    <input type="number" id="to_isolation_time_input" class="form-control" min="0" step="1" value="10">
+                    <small id="to_isolation_time_help" class="form-text text-muted">
+                        Time after which person will be moved to the isolation.
+                    </small>
+                </div>
+
+                <div class="form-group">
                     <label for="max_time_variation_input" id="max_time_variation_label">
                         Max Time Variation (seconds)
                     </label>
@@ -335,7 +345,7 @@
 
     function bind_inputs() {
         let ids = ['human_count', 'isolation_capacity', 'human_sick_probability', 'human_stationary_probability', 'human_death_probability',
-            'infection_probability', 'infection_distance', 'human_radius', 'human_max_velocity', 'human_immunity_probability'];
+            'infection_probability', 'infection_distance', 'human_radius', 'human_max_velocity', 'human_immunity_probability', 'to_isolation_time'];
         for (let i = 0; i < ids.length; i++) {
             document.getElementById(ids[i] + '_input').oninput = function () {
                 document.getElementById(ids[i] + '_span').innerHTML = document.getElementById(ids[i] + '_input').value;
