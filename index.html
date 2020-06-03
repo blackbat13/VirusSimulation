@@ -169,15 +169,23 @@
                     </small>
                 </div>
 
-                <button type="button" id="add_sick_button" class="btn btn-lg btn-primary"
-                        onclick="simulation.add_sick();">
-                    Add sick
-                </button>
+                <div class="form-group">
+                    <button type="button" id="add_sick_button" class="btn btn-lg btn-danger"
+                            onclick="simulation.add_sick();">
+                        Add sick
+                    </button>
+                    <button type="button" id="add_healthy_button" class="btn btn-lg btn-success"
+                            onclick="simulation.add_healthy();">
+                        Add healthy
+                    </button>
+                </div>
 
-                <button type="button" id="reset_button" class="btn btn-lg btn-danger"
-                        onclick="simulation.reset(); reset_chart();">
-                    Reset simulation
-                </button>
+                <div class="form-group">
+                    <button type="button" id="reset_button" class="btn btn-lg btn-primary"
+                            onclick="simulation.reset(); reset_chart();">
+                        Reset simulation
+                    </button>
+                </div>
             </form>
         </div>
     </div>

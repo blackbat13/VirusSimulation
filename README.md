@@ -4,7 +4,13 @@
 
 Simple virus simulation written in Python 3.8.
 
-Simulation is displayed on a HTML canvas element, and Transcrypt library is used to convert Python code into JavaScript code.
+Simulation is displayed on an HTML canvas element, and Transcrypt library is used to convert Python code into JavaScript code.
+
+## How to run
+    pip install -r requirements.txt
+    transcrypt -m -b -n simulation.py
+    
+And then open index.html in your favourite web browser.
 
 ## Current state
 
