@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2020-06-03 13:45:45
+// Transcrypt'ed from Python, 2020-06-22 09:38:03
 var math = {};
 var random = {};
 var time = {};
@@ -24,7 +24,13 @@ export var Human =  __class__ ('Human', [Element], {
 		self._color = settings.human_status_color [self._status];
 		self._timer = time.time ();
 		self._time_variation = random.randint (-(settings.max_time_variation), settings.max_time_variation);
-		self._immune = random.random () < self._settings.human_immunity_probability;
+		self._last_infection_check_time = 0;
+		if (self._status == HumanStatus.SICK || self._status == HumanStatus.CONTAGIOUS) {
+			self._immune = false;
+		}
+		else {
+			self._immune = random.random () < self._settings.human_immunity_probability;
+		}
 		self._to_isolation_timer = 0;
 		if (self._immune) {
 			self._status = HumanStatus.HEALTHY;
@@ -33,6 +39,12 @@ export var Human =  __class__ ('Human', [Element], {
 	});},
 	get _get_status () {return __get__ (this, function (self) {
 		return self._status;
+	});},
+	get _get_last_infection_check_time () {return __get__ (this, function (self) {
+		return self._last_infection_check_time;
+	});},
+	get _set_last_infection_check_time () {return __get__ (this, function (self, value) {
+		self._last_infection_check_time = value;
 	});},
 	get start_isolation_timer () {return __get__ (this, function (self) {
 		self._to_isolation_timer = time.time ();
@@ -104,6 +116,7 @@ export var Human =  __class__ ('Human', [Element], {
 		}
 	});}
 });
+Object.defineProperty (Human, 'last_infection_check_time', property.call (Human, Human._get_last_infection_check_time, Human._set_last_infection_check_time));
 Object.defineProperty (Human, 'status', property.call (Human, Human._get_status));;
 
 //# sourceMappingURL=elements.human.map

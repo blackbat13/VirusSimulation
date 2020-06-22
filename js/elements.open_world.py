@@ -54,6 +54,10 @@ class OpenWorld(Container):
                     if y + ky < 0 or y + ky >= len(healthy_grid[x + kx]):
                         continue
                     for h in healthy_grid[x + kx][y + ky]:
+                        if time.time() - s.last_infection_check_time < 0.1:
+                            continue
+
+                        s.last_infection_check_time = time.time()
                         if s.distance(h) <= self._settings.infection_distance and \
                                 random.random() < self._settings.infection_probability:
                             h.change_status(HumanStatus.CONTAGIOUS)
