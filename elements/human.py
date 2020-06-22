@@ -20,6 +20,7 @@ class Human(Element):
         self._color = settings.human_status_color[self._status]
         self._timer = time.time()
         self._time_variation = random.randint(-settings.max_time_variation, settings.max_time_variation)
+        self._last_infection_check_time = 0
         if self._status == HumanStatus.SICK or self._status == HumanStatus.CONTAGIOUS:
             self._immune = False
         else:
@@ -32,6 +33,14 @@ class Human(Element):
     @property
     def status(self) -> HumanStatus:
         return self._status
+
+    @property
+    def last_infection_check_time(self) -> float:
+        return self._last_infection_check_time
+
+    @last_infection_check_time.setter
+    def last_infection_check_time(self, value: float):
+        self._last_infection_check_time = value
 
     def start_isolation_timer(self):
         self._to_isolation_timer = time.time()
