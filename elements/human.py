@@ -11,7 +11,7 @@ class Human(Element):
     Class for representing a human in the simulation.
     """
 
-    def __init__(self, settings: Settings, status, stationary):
+    def __init__(self, settings: Settings, status: HumanStatus, stationary: bool):
         super().__init__(settings)
         self._velocity = (0, 0)
         self._radius = settings.human_size_radius
@@ -20,7 +20,10 @@ class Human(Element):
         self._color = settings.human_status_color[self._status]
         self._timer = time.time()
         self._time_variation = random.randint(-settings.max_time_variation, settings.max_time_variation)
-        self._immune = random.random() < self._settings.human_immunity_probability
+        if self._status == HumanStatus.SICK or self._status == HumanStatus.CONTAGIOUS:
+            self._immune = False
+        else:
+            self._immune = random.random() < self._settings.human_immunity_probability
         self._to_isolation_timer = 0
         if self._immune:
             self._status = HumanStatus.HEALTHY
